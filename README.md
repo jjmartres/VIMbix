@@ -267,6 +267,7 @@ Zabbix template
   * **[WARNING]** Discovery: used capacity exceed 75% on datastore
   * **[WARNING]** Discovery: memory usage exceed 75% on virtual machine
   * **[WARNING]** Discovery: VMware Tools CD is mounted on virtual machine
+  * **[WARNING]** Discovery: VMware tools is outdated on virtual machine
   * **[INFORMATION]** Discovery: host has just been restarted
 
 ###### Graphs
