@@ -1,0 +1,111 @@
+require 'rake/clean'
+
+root = File.expand_path File.dirname(__FILE__)
+
+CLEAN.include "var", "data"
+CLOBBER.include "data/*", "var/log/*", "var/run/*"
+
+task :default do
+  system("rake -sT")  # s for silent
+end
+
+desc "Show VIMbix version"
+task :version do
+  require "lib/vimbix"
+  puts "#{VIMbix::VERSION::STRING}"
+end
+
+namespace :install do
+
+  desc "Deploy init script (Debian or Ubuntu)"
+  task :initscript do
+    thin_path = `which thin`
+    script  = "#! /bin/sh\n\n### BEGIN INIT INFO\n# Provides:          vimbix\n# Default-Start:     2 3 4 5\n# Default-Stop:      0 1 6\n# Required-Start:    $local_fs $remote_fs\n# Required-Stop:     $local_fs $remote_fs\n# Short-Description: Start VIMbix server\n# Description:       This file should be used to start stop VIMbix server\n### END INIT INFO\n"
+    script += "\n# Author: Jean-Jacques Martrès <jjmartres |at| gmail |dot| com>\n\n"
+    script += "PATH=/sbin:/usr/sbin:/bin:/usr/bin:/var/lib/gems/1.8/bin\nAPP_DIR=#{root}\nDESC=\"VIMbix server\"\nSCRIPT_NAME=/etc/init.d/vimbix\nDAEMON=#{thin_path.chop}\nDAEMON_ARGS=\"-C config/vimbix.yml\"\n"
+    script += "\n# Exit if the package is not installed\n[ -x \"$DAEMON\" ] || exit 0\n\n"
+    script += "# Load the VERBOSE setting and other rcS variables\n. /lib/init/vars.sh\n\n"
+    script += "# Define LSB log_* functions.\n# Depend on lsb-base (>= 3.2-14) to ensure that this file is present\n# and status_of_proc is working.\n. /lib/lsb/init-functions\n\n"
+    script += "# Define start/stop method\n"
+    script += "do_start() {\n  cd $APP_DIR && bundle exec thin start -d $DAEMON_ARGS\n}\n\n"
+    script += "do_stop() {\n  [ -x \"$APP_DIR\"/var/run/vimbix.pid ] || echo \"VIMbix server not running\"; exit 0\n  cd $APP_DIR && bundle exec thin stop -d $DAEMON_ARGS\n}\n\n"
+    script += "do_status() {\n  [ -x \"$APP_DIR\"/var/run/vimbix.pid ] || echo \"VIMbix server not running\"; exit 0\n  echo \"VIMbix server is running\"\n}\n\n"
+    script += "case \"$1\" in\n  start)\n    echo \"Starting VIMbix server\"\n    do_start\n    ;;\n"
+    script += "  stop)\n    echo \"Stopping VIMbix server\"\n    do_stop\n    ;;\n"
+    script += "  restart)\n    echo \"Trying to restartVIMbix server...\"\n    do_stop\n    sleep 5\n    do_start\n  ;;\n"
+    script += "  status)\n    do_status\n  ;;\n  *)\n"
+    script += "  echo \"Usage: $SCRIPT_NAME {start|stop|restart}\" >&2\n  exit 3\n  ;;\nesac"
+
+    begin
+      f = File.open(File.join("/etc/init.d/vimbix"), "w")
+      f << script
+    rescue Exception => fault
+      puts fault.message
+      exit(-1)
+    ensure
+      f.close unless f.nil?
+      File.chmod(755, "/etc/init.d/vimbix")
+      system("sudo update-rc.d vimbix defaults")
+    end
+
+  end
+
+  desc "Install VIMbix client into Zabbix external script directory"
+  task :client do
+    src = File.join(root, '/scripts/vimbix-client')
+    dst = ARGV[0]
+    begin
+      FileUtils.cp(src, dst.to_s)
+      puts "VIMbix client installed in #{dst}"
+    rescue
+      puts "Cannot install VIMbix client to #{dst}"
+      exit(-1)
+    end
+  end
+
+  task :all do
+    [:dependencies, :autostart, :client]
+  end
+end
+
+namespace :daemon do
+  desc "Start VIMbix daemon"
+  task :start do
+    if !File.exists?("var/run/vimbix.pid")
+      puts "Starting vimbix..."
+      system("thin -c #{root} -C config/vimbix.yml -R config.ru start")
+    else
+      puts "vimbix is already running"
+    end
+  end
+
+  desc "Status of VIMbix daemon"
+  task :status do
+    if File.exists?("var/run/vimbix.pid")
+      puts "vimbix running"
+    else
+      puts "vimbix is not running"
+    end
+  end
+
+  desc "Stop VIMbix daemon"
+  task :stop do
+    if !File.exists?("var/run/vimbix.pid")
+      puts "vimbix is not running"
+    else
+      pid = File.read("var/run/vimbix.pid").to_i
+      syscmd = "kill -s QUIT #{pid}"
+      puts "Stopping vimbix..."
+      system(syscmd)
+      FileUtils.rm_f("var/run/vimbix.pid")
+    end
+  end
+
+  desc "Restart VIMbix daemon"
+  task :restart do
+    puts "Stopping vimbix..."
+    [:stop]
+    puts "Starting vimbix..."
+    [:start]
+  end
+end

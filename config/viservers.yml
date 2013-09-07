@@ -1,0 +1,13 @@
+# list all your VIServer (vCenter and/or ESX(i) hosts)
+1:
+  hostname: 10.0.0.1                                # VIServer IP address or fqdn
+  username: my-username                             # VIServer username
+  password: 'my-password'                           # VIServer password
+  frequency: 300s                                   # VIServer check frequency. Supported format: 300s, 5m
+  timeout: 280s                                     # VIServer check frequency. Supported format: 280s, 4m
+2:
+  hostname: 10.2.7.123                              # VIServer IP address or fqdn
+  username: my-username                             # VIServer username
+  password: 'my-password'                           # VIServer password
+  frequency: 300s                                   # VIServer check frequency. Supported format: 300s, 5m
+  timeout: 280s                                     # VIServer check frequency. Supported format: 280s, 4m

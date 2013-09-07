@@ -1,0 +1,80 @@
+#!/usr/bin/env ruby
+
+=begin
+Script: vimbix-client
+Version: 1.0.5
+Author: Jean-Jacques Martrès (jjmartres |at| gmail |dot| com)
+Description: Script to query VIMbix server
+License: GPL2
+
+USAGE:
+  as a script:          vimbix-client [options]
+  as an item:           vimbix-client["-u","URL"]
+
+OPTIONS
+    -h, --help                       Display this help message
+    -u, --url URL                    VIMbix RESTfull URL to query
+=end
+
+require "rubygems"
+require "json"
+require 'optparse'
+require "net/http"
+require "uri"
+require "timeout"
+
+# how to use it...quiet simple
+OPTIONS = {}
+mandatory_options=[:url]
+optparse = OptionParser.new do |opts|
+  opts.banner = "Usage: #{$0} [OPTIONS]"
+  opts.separator ""
+  opts.separator "OPTIONS"
+  opts.on("-h", "--help", "Display this help message") do
+    puts opts
+    exit(-1)
+  end
+  opts.on('-u', '--url URL', String, 'VIMbix RESTfull URL to query') { |v| OPTIONS[:url] = v }
+  opts.separator ""
+end
+
+# show usage when no args pass
+if ARGV.empty?
+  puts optparse
+  exit(-1)
+end
+
+# validate that mandatory parameters are specified
+begin
+  optparse.parse!(ARGV)
+  missing = mandatory_options.select{|p| OPTIONS[p].nil? }
+  if not missing.empty?
+    puts "Missing options: #{missing.join(', ')}"
+    puts optparse
+    exit(-1)
+  end
+  rescue OptionParser::ParseError,OptionParser::InvalidArgument,OptionParser::InvalidOption
+       puts $!.to_s
+       exit(-1)
+end
+
+uri = URI.parse(OPTIONS[:url])
+
+begin
+  http = Net::HTTP.new(uri.host, uri.port)
+  request = Net::HTTP::Get.new(uri.request_uri)
+
+  response = http.request(request)
+
+  document = JSON.parse(response.body)
+
+  if response.code == "200"
+    puts document["result"]
+  else
+    puts document["error"]
+  end
+rescue Timeout::Error => fault
+  puts "ERROR: #{fault.message}"
+rescue Errno::ETIMEDOUT, Errno::ECONNREFUSED, Errno::EHOSTUNREACH => fault
+  puts "ERROR: #{fault.message}"
+end

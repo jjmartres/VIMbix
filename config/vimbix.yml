@@ -1,0 +1,12 @@
+---
+    environment: production
+    rackup: config.ru
+    address: 0.0.0.0
+    port: 9090
+    pid: var/run/vimbix.pid
+    log: var/log/vimbix.log
+    max_conns: 1024
+    timeout: 30
+    server: 1
+    max_persistent_conns: 512
+    daemonize: true
