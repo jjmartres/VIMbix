@@ -217,31 +217,31 @@ Zabbix template
   * Discovery: Accessibility for each datatstore
   * Discovery: maintenance mode for each datastore
   * Discovery: filesystem type for each datastore
-  * Discovery: Ballooned memory (B) on on each virtual machine
+  * Discovery: Ballooned memory (B) on each virtual machine
   * Discovery: Last boot time for on each virtual machine
   * Discovery: Last shutdown orderly power off status for on each virtual machine
-  * Discovery: Disk(s) consolidation needed on on each virtual machine
+  * Discovery: Disk(s) consolidation needed on each virtual machine
   * Discovery: Memory usage (B) on guest for on each virtual machine
   * Discovery: Memory usage (B) on host for on each virtual machine
   * Discovery: Primary IP address for on each virtual machine
-  * Discovery: Total CPU size (Hz) on on each virtual machine
+  * Discovery: Total CPU size (Hz) on each virtual machine
   * Discovery: Total memory size (B) for on each virtual machine
-  * Discovery: Number of vCPU on on each virtual machine
-  * Discovery: CPU usage (Hz) on on each virtual machine
-  * Discovery: Overall alarm status on on each virtual machine
-  * Discovery: CPU usage (%) on on each virtual machine
+  * Discovery: Number of vCPU on each virtual machine
+  * Discovery: CPU usage (Hz) on each virtual machine
+  * Discovery: Overall alarm status on each virtual machine
+  * Discovery: CPU usage (%) on each virtual machine
   * Discovery: Memory usage (%) on guest for on each virtual machine
-  * Discovery: Used storage (%) on on each virtual machine
-  * Discovery: Power state for on each virtual machine
-  * Discovery: Provisioned storage (B) on on each virtual machine
-  * Discovery: Host responsible for running for on each virtual machine
-  * Discovery: Storage location fo on each virtual machine
-  * Discovery: Tools installer CD mounted status on on each virtual machine
-  * Discovery: Uncommited storage (B) on on each virtual machine
-  * Discovery: Unshared storage (B) on on each virtual machine
-  * Discovery: Uptime for on each virtual machine
-  * Discovery: Used storage (B) on on each virtual machine
-  * Discovery: VMware tools version on on each virtual machine
+  * Discovery: Used storage (%) on each virtual machine
+  * Discovery: Power state for each virtual machine
+  * Discovery: Provisioned storage (B) on each virtual machine
+  * Discovery: Host responsible for running each virtual machine
+  * Discovery: Storage location for each virtual machine
+  * Discovery: Tools installer CD mounted status on each virtual machine
+  * Discovery: Uncommited storage (B) on each virtual machine
+  * Discovery: Unshared storage (B) on each virtual machine
+  * Discovery: Uptime for each virtual machine
+  * Discovery: Used storage (B) on each virtual machine
+  * Discovery: VMware tools version on each virtual machine
 
 ###### Triggers
 
