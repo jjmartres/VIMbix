@@ -25,6 +25,7 @@ On a configured frequency, VIMbix query multiple VIServers (vCenter and/or ESX(i
 |:--:|:------------------------------------ |:------------------------------------- |
 |[GET]|/:viserver/api/status          | VIMbix API VIServer last check status |
 |[GET]|/:viserver/api/timestampcheck  | VIMbix API VIServer last check date   |
+|[GET]|/:viserver/api/collectionduration  | VIMbix API VIServer collection duration, in seconds |
 |[GET]|/:viserver/api/apitype         | VIServer api type                     |
 |[GET]|/:viserver/api/apiversion      | VIServer api version                  |
 |[GET]|/:viserver/api/build           | VIServer build version                |
@@ -187,7 +188,8 @@ Zabbix template
 ###### Items
 
   * VIMbix last check status
-  * VIMbick last check
+  * VIMbix last check
+  * VIMbix collection duration 
   * VIServer product
   * VIServer API version
   * VIServer API type
@@ -310,7 +312,11 @@ Fork the project on Github and send me a merge request, or send a patch to jjmar
 
 Version
 -------
-Version 1.0.5
+Please see [VERSION](https://github.com/jjmartres/VIMbix/blob/master/VERSION) or use the rake task :
+
+```
+rake  version
+```
 
 License
 -------

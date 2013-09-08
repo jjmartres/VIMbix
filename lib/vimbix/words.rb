@@ -10,6 +10,7 @@ class VIMbix < Sinatra::Base
       version
       timestampcheck
       status
+      collectionduration
     )
 
     set :host_words, %w(

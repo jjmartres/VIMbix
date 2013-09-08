@@ -243,6 +243,9 @@ class Connector < RbVmomi::VIM
     # set api serial number
     container["viserver"]["timestampcheck"] = "#{Time.now.utc.to_i}"
 
+    # set api collection time
+    container["viserver"]["collectionduration"] = "#{(Time.now - beginning_time).to_i}"
+
     # set api status
     container["viserver"]["status"] = "OK"
 
