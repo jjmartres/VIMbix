@@ -834,7 +834,7 @@
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
-                            <key>icmpping[{#HOST},20,2,1492,3]</key>
+                            <key>icmpping[{#HOST},,,,]</key>
                             <delay>300</delay>
                             <history>7</history>
                             <trends>365</trends>
