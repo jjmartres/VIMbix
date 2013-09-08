@@ -2908,7 +2908,7 @@ http://pubs.vmware.com/vsphere-50/index.jsp#com.vmware.wssdk.apiref.doc_50/vim.v
     </templates>
     <triggers>
         <trigger>
-            <expression>{ZBX-VIMBIX:vimbix-client[&quot;-u&quot;,&quot;http://{$VIMBIX_ADDRESS}:{$VIMBIX_PORT}/{HOST.IP}/api/status&quot;].iregexp(FAILED)}=1</expression>
+            <expression>{KHP-TEMPLATE-VMWARE-VISERVER:vimbix-client[&quot;-u&quot;,&quot;http://{$VIMBIX_ADDRESS}:{$VIMBIX_PORT}/{HOST.IP}/api/status&quot;].iregexp(FAILED)}=1 | {KHP-TEMPLATE-VMWARE-VISERVER:vimbix-client[&quot;-u&quot;,&quot;http://{$VIMBIX_ADDRESS}:{$VIMBIX_PORT}/{HOST.IP}/api/timestampcheck&quot;].change(0)}=0</expression>
             <name>VIMbix check on {HOST.CONN} has failed</name>
             <url/>
             <status>0</status>
