@@ -53,7 +53,7 @@ namespace :install do
   desc "Install VIMbix client into Zabbix external script directory"
   task :client do
     src = File.join(root, '/scripts/vimbix-client')
-    dst = ARGV[0]
+    dst = ARGV.last
     begin
       FileUtils.cp(src, dst.to_s)
       puts "VIMbix client installed in #{dst}"
