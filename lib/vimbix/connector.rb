@@ -18,6 +18,7 @@ class Connector < RbVmomi::VIM
     # by default, we consider that check has failed
     container["viserver"]["status"] = "FAILED"
     container["viserver"]["timestampcheck"] = "#{Time.now.utc.to_i}"
+    container["viserver"]["collectionduration"] = "#{(Time.now - beginning_time).to_i}"
 
     # check if vCenter port (TCP 443) is reachable
     begin
@@ -243,7 +244,7 @@ class Connector < RbVmomi::VIM
     # set api serial number
     container["viserver"]["timestampcheck"] = "#{Time.now.utc.to_i}"
 
-    # set api collection time
+    # set api collection duration
     container["viserver"]["collectionduration"] = "#{(Time.now - beginning_time).to_i}"
 
     # set api status

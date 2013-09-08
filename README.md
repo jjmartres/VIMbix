@@ -312,7 +312,7 @@ Fork the project on Github and send me a merge request, or send a patch to jjmar
 
 Version
 -------
-Please see [VERSION](https://github.com/jjmartres/VIMbix/blob/master/VERSION) or use the rake task :
+Please see [VERSION](https://github.com/jjmartres/VIMbix/blob/master/VERSION) file or use the rake task :
 
 ```
 rake  version
