@@ -2901,7 +2901,16 @@ http://pubs.vmware.com/vsphere-50/index.jsp#com.vmware.wssdk.apiref.doc_50/vim.v
                     </graph_prototypes>
                 </discovery_rule>
             </discovery_rules>
-            <macros/>
+            <macros>
+                <macro>
+                    <macro>{$VIMBIX_PORT}</macro>
+                    <value>9090</value>
+                </macro>
+                <macro>
+                    <macro>{$VIMBIX_SERVER}</macro>
+                    <value>localhost</value>
+                </macro>
+            </macros>
             <templates/>
             <screens/>
         </template>
