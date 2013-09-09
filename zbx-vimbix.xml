@@ -342,7 +342,7 @@
                             <multiplier>0</multiplier>
                             <snmp_oid/>
                             <key>vimbix-client[&quot;-u&quot;,&quot;http://{$VIMBIX_ADDRESS}:{$VIMBIX_PORT}/{HOST.IP}/datastore/{#DATASTORE}/type&quot;]</key>
-                            <delay>300</delay>
+                            <delay>86400/delay>
                             <history>7</history>
                             <trends>365</trends>
                             <status>0</status>
@@ -718,7 +718,7 @@
                             <multiplier>0</multiplier>
                             <snmp_oid/>
                             <key>vimbix-client[&quot;-u&quot;,&quot;http://{$VIMBIX_ADDRESS}:{$VIMBIX_PORT}/{HOST.IP}/host/{#HOST}/cpumhz&quot;]</key>
-                            <delay>300</delay>
+                            <delay>86400</delay>
                             <history>7</history>
                             <trends>365</trends>
                             <status>0</status>
@@ -835,7 +835,7 @@
                             <multiplier>0</multiplier>
                             <snmp_oid/>
                             <key>vimbix-client[&quot;-u&quot;,&quot;http://{$VIMBIX_ADDRESS}:{$VIMBIX_PORT}/{HOST.IP}/host/{#HOST}/hardwaremodel&quot;]</key>
-                            <delay>300</delay>
+                            <delay>86400</delay>
                             <history>7</history>
                             <trends>365</trends>
                             <status>0</status>
@@ -1147,7 +1147,7 @@
                             <multiplier>0</multiplier>
                             <snmp_oid/>
                             <key>vimbix-client[&quot;-u&quot;,&quot;http://{$VIMBIX_ADDRESS}:{$VIMBIX_PORT}/{HOST.IP}/host/{#HOST}/cpucore&quot;]</key>
-                            <delay>300</delay>
+                            <delay>86400</delay>
                             <history>7</history>
                             <trends>365</trends>
                             <status>0</status>
@@ -1342,7 +1342,7 @@
                             <multiplier>0</multiplier>
                             <snmp_oid/>
                             <key>vimbix-client[&quot;-u&quot;,&quot;http://{$VIMBIX_ADDRESS}:{$VIMBIX_PORT}/{HOST.IP}/host/{#HOST}/product&quot;]</key>
-                            <delay>300</delay>
+                            <delay>86400</delay>
                             <history>7</history>
                             <trends>365</trends>
                             <status>0</status>
@@ -2662,7 +2662,7 @@
                             <multiplier>0</multiplier>
                             <snmp_oid/>
                             <key>vimbix-client[&quot;-u&quot;,&quot;http://{$VIMBIX_ADDRESS}:{$VIMBIX_PORT}/{HOST.IP}/virtualmachine/{#VIRTUALMACHINE}/vmwaretools&quot;]</key>
-                            <delay>300</delay>
+                            <delay>86400</delay>
                             <history>7</history>
                             <trends>365</trends>
                             <status>0</status>
@@ -2699,7 +2699,7 @@ http://pubs.vmware.com/vsphere-50/index.jsp#com.vmware.wssdk.apiref.doc_50/vim.v
                     </item_prototypes>
                     <trigger_prototypes>
                         <trigger_prototype>
-                            <expression>{ZBX-VIMBIX:vimbix-client[&quot;-u&quot;,&quot;http://{$VIMBIX_ADDRESS}:{$VIMBIX_PORT}/{HOST.IP}/virtualmachine/{#VIRTUALMACHINE}/balloonedmemory&quot;].last(0)}&gt;0</expression>
+                            <expression>{ZBX-VIMBIX:vimbix-client[&quot;-u&quot;,&quot;http://{$VIMBIX_ADDRESS}:{$VIMBIX_PORT}/{HOST.IP}/virtualmachine/{#VIRTUALMACHINE}/balloonedmemory&quot;].avg(1800)}&gt;0</expression>
                             <name>Ballooned memory on VM {#VIRTUALMACHINE}</name>
                             <url/>
                             <status>0</status>
