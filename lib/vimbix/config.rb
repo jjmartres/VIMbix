@@ -8,7 +8,7 @@ class VIMbix < Sinatra::Base
     end
 
     # init logger
-    @logger = Logger.new(File.join("#{settings.root}/var/log/vimbix.log"),'weekly')
+    @logger = Logger.new(File.join("#{settings.root}/var/log/vimbix.log"), shift_age = 'daily', shitf_size = 1048576 )
     set :logger, @logger
 
     # load viservers configuration file
