@@ -41,9 +41,9 @@ class VIMbix < Sinatra::Base
           ensure
             f.close unless f.nil?
           end
-          @logger.info("File #{filename} saved")
+          @logger.info("#{value["hostname"]}: File #{filename} saved")
         rescue
-          @logger.error("Execution timed out (#{(Time.now - beginning_time).to_i} seconds)")
+          @logger.error("#{value["hostname"]}: Execution timed out (#{(Time.now - beginning_time).to_i} seconds)")
         end
 
       end
