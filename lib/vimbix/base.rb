@@ -4,6 +4,11 @@ class VIMbix < Sinatra::Base
   #set :root, Dir[File.dirname(__FILE__) + "/../.."]
   #set :root, APP_ROOT
 
+  # check if datadump file exists
+  def exist_dump(viserver)
+    File.file?("#{settings.root}/data/datadump_#{viserver}")
+  end
+
   # read datadump file
   def get_dump(viserver)
     @logger = settings.logger
