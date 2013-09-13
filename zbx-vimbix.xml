@@ -342,7 +342,7 @@
                             <multiplier>0</multiplier>
                             <snmp_oid/>
                             <key>vimbix-client[&quot;-u&quot;,&quot;http://{$VIMBIX_ADDRESS}:{$VIMBIX_PORT}/{HOST.IP}/datastore/{#DATASTORE}/type&quot;]</key>
-                            <delay>86400/delay>
+                            <delay>86400</delay>
                             <history>7</history>
                             <trends>365</trends>
                             <status>0</status>
@@ -1557,7 +1557,7 @@
                             <type>0</type>
                         </trigger_prototype>
                         <trigger_prototype>
-                            <expression>{ZBX-VIMBIX:icmpping[{#HOST},20,2,1492,3].last(0)}=0</expression>
+                            <expression>{KHP-TEMPLATE-VMWARE-VISERVER:icmpping[{#HOST},,,,].last(0)}=0</expression>
                             <name>Host {#HOST} is DOWN or UNREACHABLE</name>
                             <url/>
                             <status>0</status>
@@ -2956,7 +2956,7 @@ http://pubs.vmware.com/vsphere-50/index.jsp#com.vmware.wssdk.apiref.doc_50/vim.v
     </templates>
     <triggers>
         <trigger>
-            <expression>{KHP-TEMPLATE-VMWARE-VISERVER:vimbix-client[&quot;-u&quot;,&quot;http://{$VIMBIX_ADDRESS}:{$VIMBIX_PORT}/{HOST.IP}/api/status&quot;].iregexp(FAILED)}=1 | {KHP-TEMPLATE-VMWARE-VISERVER:vimbix-client[&quot;-u&quot;,&quot;http://{$VIMBIX_ADDRESS}:{$VIMBIX_PORT}/{HOST.IP}/api/timestampcheck&quot;].change(0)}=0</expression>
+            <expression>{ZBX-VIMBIX:vimbix-client[&quot;-u&quot;,&quot;http://{$VIMBIX_ADDRESS}:{$VIMBIX_PORT}/{HOST.IP}/api/status&quot;].iregexp(FAILED)}=1 | {ZBX-VIMBIX:vimbix-client[&quot;-u&quot;,&quot;http://{$VIMBIX_ADDRESS}:{$VIMBIX_PORT}/{HOST.IP}/api/timestampcheck&quot;].change(0)}=0</expression>
             <name>VIMbix check on {HOST.CONN} has failed</name>
             <url/>
             <status>0</status>
