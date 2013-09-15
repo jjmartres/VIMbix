@@ -1557,7 +1557,7 @@
                             <type>0</type>
                         </trigger_prototype>
                         <trigger_prototype>
-                            <expression>{KHP-TEMPLATE-VMWARE-VISERVER:icmpping[{#HOST},,,,].last(0)}=0</expression>
+                            <expression>{ZBX-VIMBIX:icmpping[{#HOST},,,,].last(0)}=0</expression>
                             <name>Host {#HOST} is DOWN or UNREACHABLE</name>
                             <url/>
                             <status>0</status>
