@@ -1,9 +1,6 @@
 class VIMbix < Sinatra::Base
   register Sinatra::Partial
 
-  #set :root, Dir[File.dirname(__FILE__) + "/../.."]
-  #set :root, APP_ROOT
-
   # check if datadump file exists
   def exist_dump(viserver)
     File.file?("#{settings.root}/data/datadump_#{viserver}")
