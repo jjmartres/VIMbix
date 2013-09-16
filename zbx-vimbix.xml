@@ -2946,7 +2946,7 @@ http://pubs.vmware.com/vsphere-50/index.jsp#com.vmware.wssdk.apiref.doc_50/vim.v
                     <value>9090</value>
                 </macro>
                 <macro>
-                    <macro>{$VIMBIX_SERVER}</macro>
+                    <macro>{$VIMBIX_ADDRESS}</macro>
                     <value>localhost</value>
                 </macro>
             </macros>
