@@ -7,11 +7,10 @@ class VIMbix < Sinatra::Base
     word = params[:word]
 
     if settings.api_words.include? word
-      begin
-        viserver.exist_dump?
+      if exist_dump(viserver)
         data = get_dump(viserver)
         { :error => nil, :result => data["viserver"]["#{word}"] }.to_json
-      rescue Exception => fault
+      else
         not_found
       end
     else
@@ -27,11 +26,10 @@ class VIMbix < Sinatra::Base
     id = params[:id]
 
     if settings.host_words.include? word
-      begin
-        viserver.exist_dump?
+      if exist_dump(viserver)
         data = get_dump(viserver)
         { :error => nil, :result => data["hosts"]["#{id}"]["#{word}"] }.to_json
-      rescue Exception => fault
+      else
         not_found
       end
     else
@@ -47,11 +45,10 @@ class VIMbix < Sinatra::Base
     id = params[:id]
 
     if settings.datastore_words.include? word
-      begin
-        viserver.exist_dump?
+      if exist_dump(viserver)
         data = get_dump(viserver)
         { :error => nil, :result => data["datastores"]["#{id}"]["#{word}"] }.to_json
-      rescue Exception => fault
+      else
         not_found
       end
     else
@@ -67,11 +64,10 @@ class VIMbix < Sinatra::Base
     id = params[:id]
 
     if settings.virtualmachine_words.include? word
-      begin
-        viserver.exist_dump?
+      if exist_dump(viserver)
         data = get_dump(viserver)
         { :error => nil, :result => data["virtualmachines"]["#{id}"]["#{word}"] }.to_json
-      rescue Exception => fault
+      else
         not_found
       end
     else
@@ -109,8 +105,7 @@ class VIMbix < Sinatra::Base
     content_type :json
     viserver = params[:viserver]
 
-    begin
-      viserver.exist_dump?
+    if exist_dump(viserver)
       data = get_dump(viserver)
       value = "{  \"data\":["
       x = 0
@@ -124,7 +119,7 @@ class VIMbix < Sinatra::Base
       end
       value += "] }"
       { :error => nil, :result => value }.to_json
-    rescue Exception => fault
+    else
       not_found
     end
 
@@ -135,8 +130,7 @@ class VIMbix < Sinatra::Base
     content_type :json
     viserver = params[:viserver]
 
-    begin
-      viserver.exist_dump?
+    if exist_dump(viserver)
       data = get_dump(viserver)
       value = "{  \"data\":["
       x = 0
@@ -150,7 +144,7 @@ class VIMbix < Sinatra::Base
       end
       value += "] }"
       { :error => nil, :result => value }.to_json
-    rescue Exception => fault
+    else
       not_found
     end
 
