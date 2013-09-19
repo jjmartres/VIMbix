@@ -102,19 +102,20 @@ class Connector < RbVmomi::VIM
               pathStateUnknown += 1
             end
           end
+
           data = {
             "hostname"         => host.name,
             "product"          => host.summary.config.product.fullName,
             "hardwaremodel"    => host.summary.hardware.model,
             "cpumodel"         => host.summary.hardware.cpuModel,
-            "cpumhz"           => host.summary.hardware.cpuMhz*1000000,
+            "cpumhz"           => host.summary.hardware.cpuMhz.to_i*1000000,
             "cpucore"          => host.summary.hardware.numCpuCores,
-            "cpuusage"         => host.summary.quickStats.overallCpuUsage*1000000,
-            "cpuusagepercent"  => (host.summary.quickStats.overallCpuUsage.to_f/(host.summary.hardware.cpuMhz.to_f*host.summary.hardware.numCpuCores.to_f)),
-            "totalcpusize"     => host.summary.hardware.numCpuCores*host.summary.hardware.cpuMhz*1000000,
+            "cpuusage"         => host.summary.quickStats.overallCpuUsage.to_i*1000000,
+            "cpuusagepercent"  => host.summary.quickStats.overallCpuUsage.to_i.percent_of(host.summary.hardware.cpuMhz.to_i*host.summary.hardware.numCpuCores.to_i),
+            "totalcpusize"     => host.summary.hardware.numCpuCores*host.summary.hardware.cpuMhz.to_i*1000000,
             "totalmemorysize"  => host.summary.hardware.memorySize,
-            "memoryusage"      => host.summary.quickStats.overallMemoryUsage*1024*1024,
-            "memoryusagepercent" => (host.summary.quickStats.overallMemoryUsage*1024*1024).to_f/host.summary.hardware.memorySize.to_f,
+            "memoryusage"      => host.summary.quickStats.overallMemoryUsage.to_i*1024*1024,
+            "memoryusagepercent" => (host.summary.quickStats.overallMemoryUsage.to_i*1024*1024).percent_of(host.summary.hardware.memorySize.to_i),
             "powerstate"       => host.summary.runtime.powerState,
             "maintenancemode"  => host.summary.runtime.inMaintenanceMode,
             "uptime"           => host.summary.quickStats.uptime,
@@ -147,19 +148,20 @@ class Connector < RbVmomi::VIM
               pathStateUnknown += 1
             end
           end
+
           data = {
             "hostname"         => host.name,
             "product"          => host.summary.config.product.fullName,
             "hardwaremodel"    => host.summary.hardware.model,
             "cpumodel"         => host.summary.hardware.cpuModel,
-            "cpumhz"           => host.summary.hardware.cpuMhz*1000000,
+            "cpumhz"           => host.summary.hardware.cpuMhz.to_i*1000000,
             "cpucore"          => host.summary.hardware.numCpuCores,
-            "cpuusage"         => host.summary.quickStats.overallCpuUsage*1000000,
-            "cpuusagepercent"  => (host.summary.quickStats.overallCpuUsage.to_f/(host.summary.hardware.cpuMhz.to_f*host.summary.hardware.numCpuCores.to_f)),
-            "totalcpusize"     => host.summary.hardware.numCpuCores*host.summary.hardware.cpuMhz*1000000,
+            "cpuusage"         => host.summary.quickStats.overallCpuUsage.to_i*1000000,
+            "cpuusagepercent"  => host.summary.quickStats.overallCpuUsage.to_i.percent_of(host.summary.hardware.cpuMhz.to_i*host.summary.hardware.numCpuCores.to_i),
+            "totalcpusize"     => host.summary.hardware.numCpuCores*host.summary.hardware.cpuMhz.to_i*1000000,
             "totalmemorysize"  => host.summary.hardware.memorySize,
-            "memoryusage"      => host.summary.quickStats.overallMemoryUsage*1024*1024,
-            "memoryusagepercent" => (host.summary.quickStats.overallMemoryUsage*1024*1024).to_f/host.summary.hardware.memorySize.to_f,
+            "memoryusage"      => host.summary.quickStats.overallMemoryUsage.to_i*1024*1024,
+            "memoryusagepercent" => (host.summary.quickStats.overallMemoryUsage.to_i*1024*1024).percent_of(host.summary.hardware.memorySize.to_i),
             "powerstate"       => host.summary.runtime.powerState,
             "maintenancemode"  => host.summary.runtime.inMaintenanceMode,
             "uptime"           => host.summary.quickStats.uptime,
@@ -186,7 +188,7 @@ class Connector < RbVmomi::VIM
           "capacity"              => datastore.summary.capacity,
           "capacityfree"          => datastore.summary.freeSpace,
           "capacityused"          => datastore.summary.capacity - datastore.summary.freeSpace,
-          "capacityusedpercent"   => 1 - (datastore.summary.freeSpace.to_f /  datastore.summary.capacity.to_f),
+          "capacityusedpercent"   => datastore.summary.freeSpace.to_i.percent_of(datastore.summary.capacity.to_i),
           "accessible"            => datastore.summary.accessible,
           "maintenancemode"       => datastore.summary.maintenanceMode,
           "type"                  => datastore.summary.type,
@@ -200,8 +202,8 @@ class Connector < RbVmomi::VIM
     # collect virtualmachines informations
     @serviceContent.CreateContainerView({:container => @rootFolder ,:type => ['VirtualMachine'], :recursive => true}).view.each do |vm|
       name = vm.name.gsub(/:/,"-")
-      maxcpuusage = vm.summary.runtime.maxCpuUsage*1000000 unless vm.summary.runtime.maxCpuUsage.nil?
-      percentcpuusage = vm.summary.quickStats.overallCpuUsage.to_f / vm.summary.runtime.maxCpuUsage.to_f unless vm.summary.runtime.maxCpuUsage.nil?
+      maxcpuusage = vm.summary.runtime.maxCpuUsage.to_i*1000000 unless vm.summary.runtime.maxCpuUsage.nil?
+
       data = {
         "name"                  => vm.name,
         "runninghost"           => vm.runtime.host.name,
@@ -215,18 +217,18 @@ class Connector < RbVmomi::VIM
         "ipaddress"             => vm.summary.guest.ipAddress,
         "vmwaretools"           => vm.summary.guest.toolsVersionStatus2,
         "maxcpuusage"           => maxcpuusage,
-        "overallcpuusage"       => vm.summary.quickStats.overallCpuUsage*1000000,
-        "percentcpuusage"       => percentcpuusage,
+        "overallcpuusage"       => vm.summary.quickStats.overallCpuUsage.to_i*1000000,
+        "percentcpuusage"       => vm.summary.quickStats.overallCpuUsage.to_i.percent_of(vm.summary.runtime.maxCpuUsage.to_i),
         "numcpu"                => vm.summary.config.numCpu,
-        "memorysize"            => vm.summary.config.memorySizeMB*1024*1024,
-        "hostmemoryusage"       => vm.summary.quickStats.hostMemoryUsage*1024*1024,
-        "guestmemoryusage"      => vm.summary.quickStats.guestMemoryUsage*1024*1024,
-        "balloonedmemory"       => vm.summary.quickStats.balloonedMemory*1024*1024,
-        "percentmemoryusage"    => vm.summary.quickStats.hostMemoryUsage.to_f / vm.summary.config.memorySizeMB.to_f,
+        "memorysize"            => vm.summary.config.memorySizeMB.to_i*1024*1024,
+        "hostmemoryusage"       => vm.summary.quickStats.hostMemoryUsage.to_i*1024*1024,
+        "guestmemoryusage"      => vm.summary.quickStats.guestMemoryUsage.to_i*1024*1024,
+        "balloonedmemory"       => vm.summary.quickStats.balloonedMemory.to_i*1024*1024,
+        "percentmemoryusage"    => vm.summary.quickStats.hostMemoryUsage.to_i.percent_of(vm.summary.config.memorySizeMB.to_i),
         "uncommittedstorage"    => vm.summary.storage.uncommitted,
         "usedstorage"           => vm.summary.storage.committed,
         "provisionedstorage"    => vm.summary.storage.uncommitted + vm.summary.storage.committed,
-        "percentusedstorage"    => vm.summary.storage.committed.to_f / (vm.summary.storage.uncommitted + vm.summary.storage.committed).to_f,
+        "percentusedstorage"    => vm.summary.storage.committed.to_i.percent_of(vm.summary.storage.uncommitted.to_i + vm.summary.storage.committed.to_i),
         "unsharedstorage"       => vm.summary.storage.unshared,
         "storagelocation"       => vm.summary.config.vmPathName,
         "uptime"                => vm.summary.quickStats.uptimeSeconds,
