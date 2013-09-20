@@ -188,7 +188,7 @@ class Connector < RbVmomi::VIM
           "capacity"              => datastore.summary.capacity,
           "capacityfree"          => datastore.summary.freeSpace,
           "capacityused"          => datastore.summary.capacity - datastore.summary.freeSpace,
-          "capacityusedpercent"   => datastore.summary.freeSpace.to_i.percent_of(datastore.summary.capacity.to_i),
+          "capacityusedpercent"   => 1 - (datastore.summary.freeSpace.to_i.percent_of(datastore.summary.capacity.to_i)),
           "accessible"            => datastore.summary.accessible,
           "maintenancemode"       => datastore.summary.maintenanceMode,
           "type"                  => datastore.summary.type,
