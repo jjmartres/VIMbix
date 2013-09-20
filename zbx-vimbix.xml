@@ -2427,7 +2427,7 @@
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
-                            <key>vimbix-client[&quot;-u&quot;,&quot;http://{$VIMBIX_ADDRESS}:{$VIMBIX_PORT}/{HOST.IP}/virtualmachine/{#VIRTUALMACHINE}/nemorysize&quot;]</key>
+                            <key>vimbix-client[&quot;-u&quot;,&quot;http://{$VIMBIX_ADDRESS}:{$VIMBIX_PORT}/{HOST.IP}/virtualmachine/{#VIRTUALMACHINE}/memorysize&quot;]</key>
                             <delay>300</delay>
                             <history>7</history>
                             <trends>365</trends>
