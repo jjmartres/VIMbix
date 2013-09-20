@@ -13,7 +13,7 @@ end
 
 desc "Show VIMbix version"
 task :version do
-  require "lib/vimbix"
+  require root + "/lib/vimbix"
   puts "#{VIMbix::VERSION::STRING}"
 end
 
