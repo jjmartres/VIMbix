@@ -1,16 +1,16 @@
 VIMbix
 ======
 
-###### [Introduction](https://github.com/jjmartres/VIMbix/blob/master/README.md#introduction)
-###### [How it works](https://github.com/jjmartres/VIMbix/blob/master/README.md#how-it-works)
-###### [Installation and configuration](https://github.com/jjmartres/VIMbix/blob/master/README.md#iInstallation-and-configuration)
-###### [How to use it](https://github.com/jjmartres/VIMbix/blob/master/README.md#how-to-use-it)
-###### [Zabbix template](https://github.com/jjmartres/VIMbix/blob/master/README.md#zabbix-template)
-###### [Requirements](https://github.com/jjmartres/VIMbix/blob/master/README.md#requirements)
-###### [Support](https://github.com/jjmartres/VIMbix/blob/master/README.md#support)
-###### [Development](https://github.com/jjmartres/VIMbix/blob/master/README.md#development)
-###### [Version](https://github.com/jjmartres/VIMbix/blob/master/README.md#version)
-###### [Licence](https://github.com/jjmartres/VIMbix/blob/master/README.md#licence)
+###### [Introduction](#introduction-1)
+###### [How it works](#how-it-works-1)
+###### [Installation and configuration](#installation-and-configuration-1)
+###### [How to use it](#how-to-use-it-1)
+###### [Zabbix template](#zabbix-template-1)
+###### [Requirements](#requirements-1)
+###### [Support](#support-1)
+###### [Development](#development-1)
+###### [Version](#version-1)
+###### [License](#license-1)
 
 Introduction
 ------------
@@ -97,7 +97,7 @@ On a configured frequency, VIMbix query multiple VIServers (vCenter and/or ESX(i
 Installation and configuration
 ------------------------------
 
-1. Make sure that your system meets recommended system [requirements](https://github.com/jjmartres/VIMbix/blob/master/README.md#requirements)
+1. Make sure that your system meets recommended system [requirements](#requirements-1)
 2. Install **VIMbix** in the **ExternalScripts** directory of your Zabbix server and/or proxy. Check your `zabbix_server.conf` and/or `zabbix_proxy.conf` if in doubt
 
   ```
