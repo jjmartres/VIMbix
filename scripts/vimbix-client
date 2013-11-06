@@ -58,7 +58,8 @@ begin
        exit(-1)
 end
 
-uri = URI.parse(OPTIONS[:url])
+uri = URI.escape(OPTIONS[:url])
+uri = URI.parse(uri)
 
 begin
   http = Net::HTTP.new(uri.host, uri.port)
