@@ -6,6 +6,16 @@ class Connector < RbVmomi::VIM
     @logger = logger
   end
 
+  def get_cluster_list(folder)
+    folder.childEntity.map do |child_entity|
+      if child_entity.is_a? RbVmomi::VIM::ComputeResource
+        child_entity
+      elsif child_entity.is_a? RbVmomi::VIM::Folder
+        get_cluster_list(child_entity)
+      end
+    end.flatten
+  end
+
   def collect
 
     beginning_time = Time.now
@@ -73,7 +83,7 @@ class Connector < RbVmomi::VIM
     @datacenters.each do |datacenter|
       # get all computerRessources on all datacenters
       begin
-        @computerRessources = datacenter.hostFolder.childEntity
+        @computerRessources = get_cluster_list(datacenter.hostFolder)
       rescue RbVmomi::Fault => fault
         @logger.error("#{@host}: unable to get all Computer Ressources. #{fault.message}")
       end
@@ -85,7 +95,7 @@ class Connector < RbVmomi::VIM
       if @computerRessources.size > 1
         i = 0
         while i < (@computerRessources.size) do
-         datacenter.hostFolder.childEntity[i].host.grep(RbVmomi::VIM::HostSystem).each do |host|
+         @computerRessources[i].host.grep(RbVmomi::VIM::HostSystem).each do |host|
           name = host.name.gsub(/:/,"-")
           host.config.multipathState.path.each do |path|
             case path[:pathState]
@@ -131,7 +141,7 @@ class Connector < RbVmomi::VIM
          i += 1
         end
       else
-        datacenter.hostFolder.childEntity[0].host.grep(RbVmomi::VIM::HostSystem).each do |host|
+        @computerRessources[0].host.grep(RbVmomi::VIM::HostSystem).each do |host|
           name = host.name.gsub(/:/,"-")
           host.config.multipathState.path.each do |path|
             case path[:pathState]
