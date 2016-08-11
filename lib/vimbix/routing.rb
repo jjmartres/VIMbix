@@ -28,7 +28,11 @@ class VIMbix < Sinatra::Base
     if settings.host_words.include? word
       if exist_dump(viserver)
         data = get_dump(viserver)
-        { :error => nil, :result => data["hosts"]["#{id}"]["#{word}"] }.to_json
+        if defined? data["hosts"]["#{id}"]["#{word}"]
+          { :error => nil, :result => data["hosts"]["#{id}"]["#{word}"] }.to_json
+        else
+          not_found
+        end
       else
         not_found
       end
@@ -47,7 +51,11 @@ class VIMbix < Sinatra::Base
     if settings.datastore_words.include? word
       if exist_dump(viserver)
         data = get_dump(viserver)
-        { :error => nil, :result => data["datastores"]["#{id}"]["#{word}"] }.to_json
+        if defined? data["datastores"]["#{id}"]["#{word}"]
+          { :error => nil, :result => data["datastores"]["#{id}"]["#{word}"] }.to_json
+        else
+          not_found
+        end
       else
         not_found
       end
@@ -66,7 +74,11 @@ class VIMbix < Sinatra::Base
     if settings.virtualmachine_words.include? word
       if exist_dump(viserver)
         data = get_dump(viserver)
-        { :error => nil, :result => data["virtualmachines"]["#{id}"]["#{word}"] }.to_json
+        if defined? data["virtualmachines"]["#{id}"]["#{word}"]
+          { :error => nil, :result => data["virtualmachines"]["#{id}"]["#{word}"] }.to_json
+        else
+          not_found
+        end
       else
         not_found
       end
